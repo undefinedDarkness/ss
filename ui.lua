@@ -1,6 +1,7 @@
 local Gdk = require('lgi').Gdk
 
 local M = {}
+local items = require('sources').apps() -- This might be a bit dumb, idk
 
 function M.class (widget, class)
 	widget:get_style_context():add_class(class)
@@ -21,30 +22,30 @@ end
 
 function M.search_bar(window, list)
 	local entry = Gtk.SearchEntry{}
-	local bar = Gtk.SearchBar {
-		Gtk.Box {
-			entry
+	local bar = Gtk.Box {
+			entry,
+			homogeneous = true
 		}
-	}
-	bar:set_search_mode(true)
-	bar:connect_entry(entry)
+	-- bar:set_search_mode(true)
+	-- bar:connect_entry(entry)
 
 	-- Invalidate filter
 	-- TODO: Remove a way to clean up irrelevant items..
+	-- TODO: This has a slight delay which feels sorta sluggish..
 	function entry.on_search_changed()
-		require('behaviour').update_list_by_search(entry.text, list)
 		list:invalidate_filter() -- For existing items..
+		require('behaviour').update_list_by_search(entry.text, list)
 		list:show_all() -- show the new widgets, if any
 	end
 
-	list:set_filter_func(function(row)
-		return require('behaviour').filter_by_search(entry.text, row:get_child().label)
-	end)
-	
-	-- Chomp every input event the window recieves
-	function window.on_key_press_event(_, event)
-		bar:handle_event(event)
+	function entry.on_stop_search()
+		window:close()
 	end
+
+	list:set_filter_func(function(row)
+		return require('behaviour').filter_by_search(entry.text, row:get_child().label, items)
+	end)
+
 	return bar
 end
 
@@ -67,10 +68,10 @@ function M.list_item(item)
 end
 
 function M.list()
-	local items = require('sources').apps() -- This might be a bit dumb, idk
 	local list = Gtk.ListBox{}
-	for _, item in ipairs(items) do
+	for k, item in ipairs(items) do
 		list:prepend(M.list_item(item))
+		items[k] = item.name
 	end
 	function list:on_row_activated(row)
 		row:get_child():pressed()

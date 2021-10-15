@@ -1,13 +1,8 @@
 local M = {}
 local Gio = require('lgi').Gio
-local str = require('str')
+local str = require('util.str')
+local tbl = require('util.tbl')
 
-function tbl_contains(tbl, v)
-	for _, va in ipairs(tbl) do
-		if va == v then return true end
-	end
-	return false
-end
 
 -- Desktop applications with .desktop files.
 function M.apps()
@@ -25,16 +20,20 @@ end
 
 local maths_cache = {}
 function M.math(search)
- -- We only care about numbers and symbols
-	if string.find(search, '[a-z][A-Z]') then
-		return 
-	else
-		local x = (load('return ('..search..')'))()
-		if x == tonumber(search) then return end
-		local r = (search .. ' = ' .. x) 
-		if (not tbl_contains(maths_cache, r)) then -- TODO: make this dumb bit better..
-			table.insert(maths_cache, r)
-			return { name = (search .. ' = ' .. (load('return ('..search..')'))()), cb = function() end } -- add clipboard callback
+	-- We only care about numbers and symbols
+	if string.find(search, '=') then -- is math operation
+		if string.find(search, "[a-z][A-Z]") then return end -- only care about numbers
+
+		search = search:gsub('=', '') -- NOTE: Problems could crop up here...
+		
+		local x = load('return ('..search..')')
+		if not x or x() == tonumber(search) then return end
+		
+		local resp = (search .. '= ' .. x()) 
+		
+		if (not tbl.contains(maths_cache, resp)) then -- TODO: make this dumb bit better..
+			table.insert(maths_cache, resp)
+			return { name = resp, cb = function() end } -- add clipboard callback
 		else
 			return
 		end
