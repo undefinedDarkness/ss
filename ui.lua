@@ -1,7 +1,8 @@
 local Gdk = require('lgi').Gdk
 
 local M = {}
-local items = require('sources').apps() -- This might be a bit dumb, idk
+-- CHANGE
+local items = require('sources').apps() 
 
 function M.class (widget, class)
 	widget:get_style_context():add_class(class)
@@ -9,7 +10,7 @@ end
 
 function M.css()
 	local provider = Gtk.CssProvider()
-	provider:load_from_path('app.css') -- TODO: Error checking here
+	assert(provider:load_from_path('app.css'), 'ERROR: app.css not found') -- TODO: make sure is using correct path...
 
 	local screen = Gdk.Display.get_default_screen(Gdk.Display:get_default())
 	local GTK_STYLE_PROVIDER_PRIORITY_APPLICATION = 600
@@ -30,10 +31,9 @@ function M.search_bar(window, list)
 	-- bar:connect_entry(entry)
 
 	-- Invalidate filter
-	-- TODO: Remove a way to clean up irrelevant items..
 	-- TODO: This has a slight delay which feels sorta sluggish..
 	function entry.on_search_changed()
-		list:invalidate_filter() -- For existing items..
+		require('behaviour').filter_by_search(list, entry.text, items)
 		require('behaviour').update_list_by_search(entry.text, list)
 		list:show_all() -- show the new widgets, if any
 	end
@@ -42,14 +42,12 @@ function M.search_bar(window, list)
 		window:close()
 	end
 
-	list:set_filter_func(function(row)
-		return require('behaviour').filter_by_search(entry.text, row:get_child().label, items)
-	end)
+	-- list:set_filter_func(function(row)
+	-- 	return require('behaviour').filter_by_search(entry.text, row:get_child().label, items)
+	-- end)
 
 	return bar
 end
-
--- CHANGE
 
 function M.list_item(item)
 	local widget = Gtk.Button.new_with_label(item.name)
@@ -64,18 +62,18 @@ function M.list_item(item)
 		image:set_pixel_size(32)
 		widget:set_image(image)
 	end
-	return widget --Gtk.Label { label=item.name}
+	return widget 
 end
 
 function M.list()
-	local list = Gtk.ListBox{}
+	local list = Gtk.VBox{}
 	for k, item in ipairs(items) do
-		list:prepend(M.list_item(item))
+		list:add(M.list_item(item))
 		items[k] = item.name
 	end
-	function list:on_row_activated(row)
-		row:get_child():pressed()
-	end
+	-- function list:on_row_activated(row)
+	-- 	row:get_child():pressed()
+	-- end
 	return list
 end
 

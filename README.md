@@ -29,8 +29,10 @@ And its full of performance issues everywhere
 
 ### TODO
 - Proper capturing of the keyboard
-- A file finder source
+- A file finder source ✔
 - A rip grep source
+- Fuzzy matching using https://github.com/swarn/fzy-lua
 - A unit conversion source
 - More advanced results than just icon / text / callback
 - A configuration system - Might not implement not sure
+`grep -r 'TODO' .`
