@@ -5,7 +5,7 @@ function M.starts_with(str, start)
 end
 
 function M.trim(s)
-	return s:match "^%s*(.-)%s*$"
+	return s:match("^%s*(.-)%s*$") or ""
 end
 
 function M.split (inputstr, sep)

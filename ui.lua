@@ -2,7 +2,6 @@ local Gdk = require('lgi').Gdk
 
 local M = {}
 -- CHANGE
-local items = require('sources').apps() 
 
 function M.class (widget, class)
 	widget:get_style_context():add_class(class)
@@ -35,7 +34,7 @@ function M.search_bar(window, list)
 	function entry.on_search_changed()
 		require('behaviour').filter_by_search(list, entry.text, items)
 		require('behaviour').update_list_by_search(entry.text, list)
-		list:show_all() -- show the new widgets, if any
+		-- list:show_all() -- show the new widgets, if any
 	end
 
 	function entry.on_stop_search()
@@ -51,6 +50,7 @@ end
 
 function M.list_item(item)
 	local widget = Gtk.Button.new_with_label(item.name)
+	widget:set_visible(true)
 	function widget.on_pressed()
 		item.cb()
 		Gtk.main_quit()
@@ -67,9 +67,8 @@ end
 
 function M.list()
 	local list = Gtk.VBox{}
-	for k, item in ipairs(items) do
+	for k, item in ipairs(require('sources').apps()) do
 		list:add(M.list_item(item))
-		items[k] = item.name
 	end
 	-- function list:on_row_activated(row)
 	-- 	row:get_child():pressed()

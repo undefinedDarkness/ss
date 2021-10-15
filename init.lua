@@ -26,5 +26,4 @@ local widget = Gtk.VBox {
 	}
 	window:add(widget)
 window:show_all()
-require('inspect')(lgi)
 Gtk.main()
