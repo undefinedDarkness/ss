@@ -28,11 +28,14 @@ I wouldnt consider it usable as of right now..
 And its full of performance issues everywhere
 
 ### TODO
-- Proper capturing of the keyboard
+- Proper capturing of the keyboard - has improved
 - A file finder source ✔
 - A rip grep source
-- Fuzzy matching using https://github.com/swarn/fzy-lua
+- Fuzzy matching using https://github.com/swarn/fzy-lua ✔
 - A unit conversion source
+- Dmenu mode  ✔ T
+- Add icon support to dmenu mode
+- Better documentation
 - More advanced results than just icon / text / callback
 - A configuration system - Might not implement not sure
 `grep -r 'TODO' .`
@@ -56,3 +59,7 @@ Bang: `!m`
 
 * Bangs are used as a prefix to your query to target a specific source.
 Eg: `!f init.lua` will try using the file finder source
+
+### Credits
+- [Fzy-Lua](https://github.com/swarn/fzy-lua) for implements fuzzy finding so I don't have to :)
+- No37 for giving lots of help and feedback on the project

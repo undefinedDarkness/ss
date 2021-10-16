@@ -2,14 +2,18 @@ local M = {}
 
 function M.contains(tbl, v)
 	for _, val in ipairs(tbl) do
-		if val == v then return true end
+		if val == v then
+			return true
+		end
 	end
 	return false
 end
 
 function M.key_contains(tbl, v)
 	for key, _ in pairs(tbl) do
-		if key == v then return true end
+		if key == v then
+			return true
+		end
 	end
 	return false
 end
@@ -21,6 +25,14 @@ function M.all(tbl)
 		end
 	end
 	return true
+end
+
+function M.map(tbl, fn)
+	local o = {}
+	for k, v in ipairs(tbl) do
+		o[k] = fn(k, v) or v
+	end
+	return o
 end
 
 return M
