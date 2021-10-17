@@ -3,7 +3,7 @@ local M = {}
 local tbl = require('util.tbl')
 local str = require('util.str')
 
-function M.fuzzy_search(list, search)
+function M.fuzzy_search(search, list)
 	local fzy = require("util.fzy")
 	list:foreach(function(child)
 		if not tbl.contains(cache, child) then
@@ -28,7 +28,7 @@ function M.fuzzy_search(list, search)
 	end
 end
 
-function M.search(list, search)
+function M.search(search, list)
 	-- Store all new items in the cache & empty the list
 	list:foreach(function(child)
 		if not tbl.contains(cache, child) then

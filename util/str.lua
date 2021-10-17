@@ -2,7 +2,7 @@ local M = {}
 
 function M.parse_search_arguments(search, expected)
 	local cpy = search
-	for match in search:gmatch('\w+:\S+') do
+	for match in search:gmatch('%w+:%S+') do
 		local name, val = M.split_between(search, expected)
 		expected[name:lower()] = val
 		cpy = cpy:gsub(search, '')
