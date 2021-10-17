@@ -9,7 +9,7 @@ list {
 	font-family: sans-serif;
 }
 
-button {
+.list-item {
 	background-color: #222;
 	padding: 8px;
 	outline-color: #fff;
@@ -19,7 +19,7 @@ window {
 	background-color: #222;
 }
 
-row:selected button, button:hover  {
+row:selected .list-item, .list-item:hover  {
 	background: #333;
 }
 
