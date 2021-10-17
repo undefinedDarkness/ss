@@ -55,7 +55,7 @@ installed with a [.desktop](https://wiki.archlinux.org/title/desktop_entries) fi
 ### Math 
 Any queries in the form of `n <operation> n =` will try to be solved by lua,
 and the result will become an item,
-Bang: `!m`
+Bang: `!m` - The equal sign shouldnt be there when using the bang
 
 * Bangs are used as a prefix to your query to target a specific source.
 Eg: `!f init.lua` will try using the file finder source

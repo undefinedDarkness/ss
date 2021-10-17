@@ -6,6 +6,7 @@ local M = {}
 
 function M.class (widget, class)
 	widget:get_style_context():add_class(class)
+	return widget
 end
 
 function M.css(base_path)
@@ -26,9 +27,9 @@ end
 
 function M.search_bar(window, list)
 	local entry = Gtk.SearchEntry{}
-	local bar = Gtk.Box {
+	local bar = Gtk.HBox {
 		entry,
-		homogeneous = true
+		homogeneous = false,
 	}
 
 	-- TODO: This has a slight delay which feels sorta sluggish..
@@ -45,16 +46,19 @@ function M.search_bar(window, list)
 
 	-- See: https://gitlab.gnome.org/GNOME/gtk/blob/master/gdk/gdkkeysyms.h
 	function window.on_key_press_event(_, e)
-		if (e.keyval == 0xff1b) then -- Escape
+		-- Escape
+		if (e.keyval == 0xff1b) then 
 			window:close()
 		end
 	end
 
 	function list.on_key_press_event(_, e)
-		if (e.keyval ~= 0xff52 or e.keyval ~= 0xff5) then -- Up / Down
+		-- Up / Down / Return
+		if (e.keyval ~= 0xff52 or e.keyval ~= 0xff5 or e.keyval ~= 0xff0d) then 
 			entry:handle_event(e)
 			entry:grab_focus_without_selecting()
 		end
+		return false
 	end
 
 	return bar

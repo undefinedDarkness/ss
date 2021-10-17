@@ -69,7 +69,7 @@ function M.file(search, force)
 	local out = {}
 	for line in results:lines() do
 		if not tbl.contains(files_cache, line) then -- Do not reapeat entries
-			tbl.insert(files_cache, line)
+			table.insert(files_cache, line)
 			table.insert(out, {
 				icon = Gio.content_type_get_icon(Gio.content_type_guess(line)),
 				name = line:gsub(home, "~"),
@@ -79,6 +79,7 @@ function M.file(search, force)
 			})
 		end
 	end
+	print(require('util.inspect')(out))
 	return out
 end
 
