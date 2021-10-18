@@ -9,6 +9,7 @@ local M = {}
 M.enabled_sources = {
 	m = src.math,
 	f = src.file,
+	["if"] = src.in_file
 }
 
 -- Source to be used at startup

@@ -2,6 +2,7 @@ return  Gtk.Window({
 	title = "SS",
 	default_width = 800,
 	default_height = 500,
+	resizable = true,
 	on_destroy = Gtk.main_quit,
 	on_key_press_event = function(_, e)
 		-- Escape

@@ -65,5 +65,6 @@ return function (search, force)
 			table.insert(out, file_item(line))
 		-- end
 	end
+	results:close()
 	return out
 end 

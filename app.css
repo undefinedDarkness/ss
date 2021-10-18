@@ -38,6 +38,11 @@ label {
 	min-width: 100px;
 }
 
+.file-title {
+	font-size: 14px;
+	font-weight: bold;
+}
+
 entry {
 	padding: 8px;
 	min-height: 50px;

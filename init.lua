@@ -10,9 +10,27 @@ Gtk = lgi.require("Gtk")
 local ui = require("ui")
 ui.util.css(base_path) 
 
+local window = Gtk.Window({
+	title = "SS",
+	default_width = 400,
+	default_height = 500,
+	resizable = true,
+	on_destroy = Gtk.main_quit,
+	on_key_press_event = function(_, e)
+		-- Escape
+		if (e.keyval == 0xff1b) then 
+			Gtk.main_quit()
+		end
+	end,
+	has_resize_grip = true,
+	window_position = Gtk.WindowPosition.CENTER,
+	decorated = false,
+	resizable = true
+})
+
 local preview = Gtk.ScrolledWindow{
-	max_content_width = ui.window.default_width / 2,
-	max_content_height = ui.window.default_height 
+	max_content_width =  window.default_width / 2,
+	max_content_height = window.default_height,
 }
 local list = ui.list.init(preview)
 local bar, entry = ui.search() 
@@ -22,18 +40,17 @@ local widget = Gtk.HBox {
 		homogeneous = false,
 		Gtk.ScrolledWindow({
 			list,
-			min_content_height = ui.window.default_height - 50,
+			min_content_height = window.default_height - 50,
 		}),
 		bar,
 		orientation = Gtk.Orientation.VERTICAL
 	}),
-	preview,
 	orientation = Gtk.Orientation.HORIZONTAL,
-	homogeneous = true,
+	homogeneous = false,
 }
--- widget:pack_end(preview, false, false, 0)
+widget:pack_start(preview, false, false, 0) -- TODO: Fix the preview widget...
 
-require('behaviour.handling').setup_all(list, entry, preview, ui.window)
-ui.window:add(widget)
-ui.window:show_all()
+require('behaviour.handling').setup_all(list, entry, preview, window)
+window:add(widget)
+window:show_all()
 Gtk.main()
