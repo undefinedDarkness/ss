@@ -17,6 +17,7 @@ list {
 
 textview {
 	padding: 16px;
+	background: #151515;
 	font-family: monospace;
 }
 

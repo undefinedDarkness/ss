@@ -1,3 +1,4 @@
+![screenshot](https://i.ibb.co/s9ckKfG/Screenshot-2021-10-18-144104.png)
 #  🚀 Super switcher  
 A simple quick menu application, built atop gtk in lua.  
 Heavily inspired by [rofi](https://github.com/davatorium/rofi) and [nvim telescope](https://github.com/nvim-telescope/telescope.nvim), they are great projects that are in a much more finished state  
@@ -36,12 +37,11 @@ And its full of performance issues everywhere - This has improved now somewhat
 - Dmenu mode  ✔   
 - Add icon support to dmenu mode  
 - Better documentation  
-- Preview support for file finder source   
-	implemented but is ugly need to fix   
-	and need image support   
+- Preview support for file finder source   ✔   
+	implemented but is ugly need to fix   Still kind of ugly...
+	and need image support    ✔  
 - More advanced results than just icon / text / callback  - Support exists but need to implement for some of the backends  
 - A configuration system - Might not implement not sure 
-- File preview support for the file finder  
 - Clear non initial items when search entry becomes empty  
 `grep -r 'TODO' .`  
   

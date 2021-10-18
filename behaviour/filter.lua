@@ -15,8 +15,7 @@ function M.fuzzy_search(search, list)
 	local data = fzy.filter(
 		search,
 		tbl.map(cache, function(_, v)
-			print(':',v:get_child().id)
-			return v:get_child().id--.label
+			return v:get_child().id --.label
 		end)
 	)
 	table.sort(data, function(a, b)
@@ -37,10 +36,12 @@ function M.search(search, list)
 		list:remove(child)
 	end)
 	-- Add each item if they match the search term
+	local empty = search:gsub('%s', '') == ""
+	search = search:lower()
 	for _, item in ipairs(cache) do
 		local heap = item:get_child().id
 		-- CHANGE: Remove the :lower() if you want the comparison to be case sensitive
-		if search == "" or #search > 0 and str.starts_with(heap:lower(), search:lower()) then
+		if empty or (str.starts_with(heap:lower(), search)) then
 			list:add(item)
 		end
 	end

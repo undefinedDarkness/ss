@@ -11,8 +11,8 @@ local ui = require("ui")
 ui.util.css(base_path) 
 
 local preview = Gtk.ScrolledWindow{
-	max_content_width = 500,
-	max_content_height = 400 
+	max_content_width = ui.window.default_width / 2,
+	max_content_height = ui.window.default_height 
 }
 local list = ui.list.init(preview)
 local bar, entry = ui.search() 
@@ -22,14 +22,14 @@ local widget = Gtk.HBox {
 		homogeneous = false,
 		Gtk.ScrolledWindow({
 			list,
-			min_content_height = 350,
+			min_content_height = ui.window.default_height - 50,
 		}),
 		bar,
 		orientation = Gtk.Orientation.VERTICAL
 	}),
+	preview,
 	orientation = Gtk.Orientation.HORIZONTAL,
-	preview
-	-- homogeneous = false,
+	homogeneous = true,
 }
 -- widget:pack_end(preview, false, false, 0)
 

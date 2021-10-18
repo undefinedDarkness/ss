@@ -31,7 +31,8 @@ function M.list_item(item)
 		function widget.on_pressed()
 			local x= M.preview:get_child()
 			if x then x:destroy() end  -- TODO: This causes some of them to get re-generated, so the preview fn should implement some sort of cache system...
-			M.preview:add(item.preview())
+			M.preview:add(item.preview(M.preview))
+			M.preview:show_all()
 		end
 	end
 	

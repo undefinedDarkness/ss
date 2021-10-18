@@ -2,8 +2,8 @@ local M = {}
 function M.setup_all(list, entry, preview, window)
 
 	function entry.on_search_changed()
-		-- CHANGE this to `fuzzy_search' for fuzzy searching
-		require('behaviour.filter').search(entry.text, list)
+		-- CHANGE this to `search' for normal searching
+		require('behaviour.filter').fuzzy_search(entry.text, list)
 		require('behaviour.sources').update_list(entry.text, list)
 		list:show_all()
 	end

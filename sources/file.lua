@@ -1,17 +1,44 @@
 local home =os.getenv("HOME")
 local Gio = require("lgi").Gio
+local GdkPixbuf = require("lgi").GdkPixbuf
+local str = require('util.str')
 local files_cache = {}
+
+local scale_factor = 1.5 -- CHANGE
+local function smart_resize_image(og_w, og_h, w, h)
+	while (og_w > w and og_h > h) do
+		og_w = og_w / scale_factor
+		og_h = og_h / scale_factor
+	end
+	return og_w, og_h
+end
 
 local function file_preview(line)
 	-- TODO: Handle displaying images
-	return function()
-		local widget = Gtk.TextView {
-			editable = false
-		}
-		local content = require('util.other').read_file(line)
-		widget.buffer:set_text(content , #content)
-		widget:show_all()
-		return widget
+	local ctype = Gio.content_type_guess(line)
+	if str.starts_with(ctype, "text") then
+		return function()
+			local widget = Gtk.TextView {
+				editable = false
+			}
+			local content = require('util.other').read_file(line)
+			widget.buffer:set_text(content , #content)
+			return widget
+		end
+	elseif str.starts_with(ctype, "image") then
+		return function(parent) 
+			local space = parent:get_allocation()
+			local pixbuf = GdkPixbuf.Pixbuf.new_from_file(line)
+			local og_w = pixbuf:get_width()
+			local og_h = pixbuf:get_height()
+			local scaling = (og_w <= 256 and og_h <= 256) and GdkPixbuf.InterpType.NEAREST or GdkPixbuf.InterpType.BILINEAR
+			local new_w, new_h = smart_resize_image(og_w, og_h, space.width, space.height)
+			pixbuf = pixbuf:scale_simple(new_w, new_h, scaling)
+			local image = Gtk.Image.new_from_pixbuf(pixbuf)
+			image:set_valign(Gtk.Align.CENTER)
+			image:set_halign(Gtk.Align.CENTER)
+			return image
+		end
 	end
 end
 
