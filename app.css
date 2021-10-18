@@ -15,6 +15,11 @@ list {
 	outline-color: #fff;
 }
 
+textview {
+	padding: 16px;
+	font-family: monospace;
+}
+
 window {
 	background-color: #222;
 }

@@ -1,7 +1,7 @@
 return  Gtk.Window({
 	title = "SS",
-	default_width = 400,
-	default_height = 300,
+	default_width = 600,
+	default_height = 400,
 	on_destroy = Gtk.main_quit,
 	on_key_press_event = function(_, e)
 		-- Escape

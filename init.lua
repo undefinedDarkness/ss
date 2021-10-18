@@ -10,28 +10,30 @@ Gtk = lgi.require("Gtk")
 local ui = require("ui")
 ui.util.css(base_path) 
 
-local preview = Gtk.Frame{}
-local list = ui.list.init()
+local preview = Gtk.ScrolledWindow{
+	max_content_width = 500,
+	max_content_height = 400 
+}
+local list = ui.list.init(preview)
 local bar, entry = ui.search() 
--- TODO: maybe use global vars instead of this passing thing? might be a bit more icky tho
+
 local widget = Gtk.HBox {
-	Gtk.VBox({
+	Gtk.Box({
 		homogeneous = false,
 		Gtk.ScrolledWindow({
 			list,
 			min_content_height = 350,
 		}),
 		bar,
+		orientation = Gtk.Orientation.VERTICAL
 	}),
-	homogeneous = false,
+	orientation = Gtk.Orientation.HORIZONTAL,
 	preview
+	-- homogeneous = false,
 }
-require('behaviour.handling').setup_all({
-	entry = entry,
-	window = ui.window,
-	preview = preview,
-	list = list
-})
+-- widget:pack_end(preview, false, false, 0)
+
+require('behaviour.handling').setup_all(list, entry, preview, ui.window)
 ui.window:add(widget)
 ui.window:show_all()
 Gtk.main()

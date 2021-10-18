@@ -4,7 +4,7 @@ Heavily inspired by [rofi](https://github.com/davatorium/rofi) and [nvim telesco
 than this mess..  
   
 ## 🎨 Customization  
-You can use the GTK Debugger to get class names and modify their appearance in app.css  
+You can use the GTK Debugger to get class names and modify their appearance in `app.css`
   
 ### How to use the GTK Debugger  
 ```  
@@ -36,9 +36,13 @@ And its full of performance issues everywhere - This has improved now somewhat
 - Dmenu mode  ✔   
 - Add icon support to dmenu mode  
 - Better documentation  
+- Preview support for file finder source   
+	implemented but is ugly need to fix   
+	and need image support   
 - More advanced results than just icon / text / callback  - Support exists but need to implement for some of the backends  
 - A configuration system - Might not implement not sure 
-- File preview support for the file finder
+- File preview support for the file finder  
+- Clear non initial items when search entry becomes empty  
 `grep -r 'TODO' .`  
   
 ## Documentation  
@@ -56,7 +60,7 @@ installed with a [.desktop](https://wiki.archlinux.org/title/desktop_entries) fi
 ### Math   
 Any queries in the form of `n <operation> n =` will try to be solved by lua,  
 and the result will become an item,  
-Bang: `!m` - The equal sign shouldnt be there when using the bang  
+Bang: `!m` - The equal sign shouldn't be there when using the bang  
   
 * Bangs are used as a prefix to your query to target a specific source.  
 Eg: `!f init.lua` will try using the file finder source  
