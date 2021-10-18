@@ -27,12 +27,14 @@ function M.list_item(item)
 		Gtk.main_quit()
 	end
 
-	if item.preview then
 		function widget.on_pressed()
-			local x= M.preview:get_child()
+	if item.preview then
+			local x = M.preview:get_child()
 			if x then x:destroy() end  -- TODO: This causes some of them to get re-generated, so the preview fn should implement some sort of cache system...
-			M.preview:add(item.preview(M.preview))
+			M.preview:add(Gtk.ScrolledWindow { item.preview(M.preview) })
 			M.preview:show_all()
+		else
+			M.preview:hide()
 		end
 	end
 	

@@ -43,10 +43,14 @@ label {
 	font-weight: bold;
 }
 
+.preview-panel {
+}
+
 entry {
 	padding: 8px;
 	min-height: 50px;
 }
+
 entry,.count {
 	background: #111;
 }

@@ -28,10 +28,15 @@ local window = Gtk.Window({
 	resizable = true
 })
 
-local preview = Gtk.ScrolledWindow{
-	max_content_width =  window.default_width / 2,
-	max_content_height = window.default_height,
-}
+local preview = Gtk.ScrolledWindow{}
+require('ui.util').class(preview, 'preview-panel')
+function preview:on_show()
+	window:resize(800, window.default_height)
+end
+function preview:on_hide()
+	window:resize(400, window.default_height)
+end
+
 local list = ui.list.init(preview)
 local bar, entry = ui.search() 
 
@@ -46,11 +51,11 @@ local widget = Gtk.HBox {
 		orientation = Gtk.Orientation.VERTICAL
 	}),
 	orientation = Gtk.Orientation.HORIZONTAL,
-	homogeneous = false,
+	homogeneous = true,
 }
-widget:pack_start(preview, false, false, 0) -- TODO: Fix the preview widget...
 
 require('behaviour.handling').setup_all(list, entry, preview, window)
 window:add(widget)
 window:show_all()
+widget:add(preview)
 Gtk.main()
