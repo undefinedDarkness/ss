@@ -38,6 +38,7 @@ label {
 	min-width: 100px;
 }
 
+/*-- Used for find in file source --*/
 .file-title {
 	font-size: 14px;
 	font-weight: bold;

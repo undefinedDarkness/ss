@@ -31,40 +31,48 @@ And its full of performance issues everywhere - This has improved now somewhat
 ### TODO  
 - Proper capturing of the keyboard - has improved   
 - A file finder source ✔  
-- A rip grep source  ✔  
+- A rip grep source  ✔ 
 - Fuzzy matching using https://github.com/swarn/fzy-lua ✔  
 - A unit conversion source  
 - Dmenu mode  ✔   
 - Add icon support to dmenu mode  
 - Better documentation  
 - Preview support for file finder source   ✔   
-	implemented but is ugly need to fix   Still kind of ugly...
+	syntax highlighting (?) 
 	and need image support    ✔  
-- More advanced results than just icon / text / callback  - Support exists but need to implement for some of the backends  
-- A configuration system - Might not implement not sure 
+- More advanced results than just icon / text / callback ✔  
+- A configuration system (?)   
 - Clear non initial items when search entry becomes empty  
 `grep -r 'TODO' .`  
   
 ## Documentation  
   
-### 📂 File finder source  
+### 📂 File Finder 
 Search for files from your home directory,  
 only works when you use a bang since   
 it would be too slow to use normally  
 Bang: `!f`  
   
-### Applications  
+### 📦 Applications  
 Search for any installed applications, that were   
 installed with a [.desktop](https://wiki.archlinux.org/title/desktop_entries) file.  
   
-### Math   
+### 👨‍🔬 Math   
 Any queries in the form of `n <operation> n =` will try to be solved by lua,  
 and the result will become an item,  
 Bang: `!m` - The equal sign shouldn't be there when using the bang  
   
+### Find in files
+Search for content of text files in your home directory,
+By default only works with a bang, with a max depth of 2, 
+requires [ag](https://github.com/ggreer/the_silver_searcher)
+Bang: `!if`
+
 * Bangs are used as a prefix to your query to target a specific source.  
 Eg: `!f init.lua` will try using the file finder source  
-  
+ 
+### Find in files 
+
 ### Credits  
 - [Fzy-Lua](https://github.com/swarn/fzy-lua) for implements fuzzy finding so I don't have to :)  
 - [No37](https://github.com/Nooo37) for giving lots of help and feedback on the project  

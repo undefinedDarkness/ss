@@ -1,6 +1,31 @@
 local M = {}
+
+-- Setup item callbacks
+function M.setup_item(item, preview, widget)
+	function widget.on_clicked()
+		item.cb()
+	end
+
+	function widget.on_pressed()
+		if item.preview then
+				local x = preview:get_child()
+				-- NOTE: If your preview generation is very slow,
+				-- please cache it in your function...
+				if x then 
+					x:destroy()
+				end  
+				-- Generate preview on-demand
+				preview:add(item.preview(preview))
+				preview:show_all()
+		else
+			preview:hide()
+		end
+	end
+end
+
 function M.setup_all(list, entry, preview, window)
 
+	-- Connect to editing / exiting the search box
 	function entry.on_search_changed()
 		-- CHANGE this to `search' for normal searching
 		require('behaviour.filter').fuzzy_search(entry.text, list)
@@ -12,12 +37,10 @@ function M.setup_all(list, entry, preview, window)
 		window:close()
 	end
 
-	-- TODO: Use a more robust way to attach functions
-	-- to a item widget, this is way too much of a hack
-	-- and will only work on buttons...
-	-- or simply store the callbacks in a widget
+	-- Connect to movement in list
 	function list.on_row_activated(_, row)
 		row:get_child():clicked()
+		Gtk.main_quit()
 	end
 
 	function list.on_row_selected(_, row)
@@ -27,11 +50,12 @@ function M.setup_all(list, entry, preview, window)
 	end
 
 	function list.on_key_press_event(_, e)
-		-- Up / Down / Return
+		-- Return
 		if (e.keyval == 0xff0d) then
 			return
 		end
 
+		-- Top / Down
 		if (e.keyval ~= 0xff52 or e.keyval ~= 0xff5) then 
 			entry:handle_event(e)
 			entry:grab_focus_without_selecting()

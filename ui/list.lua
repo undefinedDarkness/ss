@@ -2,7 +2,10 @@ local M = {preview=nil}
 local Gdk = require('lgi').Gdk
 
 -- CHANGE this to modify the appearance of a single list item,
--- the returned widget needs to have a .label property
+-- the returned widget needs to have a .id property
+-- and .clicked and .pressed methods
+-- They are used for calling the callback & triggering the preview
+--
 -- Item structure:
 -- name: string to display
 -- cb  : callback if is selected
@@ -22,21 +25,8 @@ function M.list_item(item)
 	widget.id = item.name
 	require('ui.util').class(widget, 'list-item')
 
-	function widget.on_clicked()
-		item.cb()
-		Gtk.main_quit()
-	end
-
-		function widget.on_pressed()
-	if item.preview then
-			local x = M.preview:get_child()
-			if x then x:destroy() end  -- TODO: This causes some of them to get re-generated, so the preview fn should implement some sort of cache system...
-			M.preview:add(Gtk.ScrolledWindow { item.preview(M.preview) })
-			M.preview:show_all()
-		else
-			M.preview:hide()
-		end
-	end
+	-- Setup triggers
+	require("behaviour.handling").setup_item(item, M.preview, widget)
 	
 	if item.widget then 
 		widget:add(item.widget)
@@ -56,11 +46,9 @@ function M.list_item(item)
 	return widget 
 end
 
--- CHANGE this to modify the layout in which items are shown
--- or the items added at startup
 function M.init(preview)
 	local list = Gtk.ListBox{}
-	M.preview = preview
+	M.preview = preview -- Store as global for repeated access
 	for k, item in ipairs(require('behaviour.sources').startup_source) do
 		list:add(M.list_item(item))
 	end

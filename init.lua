@@ -13,7 +13,7 @@ ui.util.css(base_path)
 local window = Gtk.Window({
 	title = "SS",
 	default_width = 400,
-	default_height = 500,
+	default_height = 400,
 	resizable = true,
 	on_destroy = Gtk.main_quit,
 	on_key_press_event = function(_, e)
@@ -43,11 +43,11 @@ local bar, entry = ui.search()
 local widget = Gtk.HBox {
 	Gtk.Box({
 		homogeneous = false,
+		bar,
 		Gtk.ScrolledWindow({
 			list,
 			min_content_height = window.default_height - 50,
 		}),
-		bar,
 		orientation = Gtk.Orientation.VERTICAL
 	}),
 	orientation = Gtk.Orientation.HORIZONTAL,

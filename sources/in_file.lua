@@ -1,12 +1,14 @@
 local str= require('util.str')
-
+local home = os.getenv("HOME")
 return function (search, force)
 	if (not force) or (#search == 0) then -- Ignore a search for every file!
 		return
 	end
 
 	-- Collect output lines
-	local cmd = io.popen("ag -H -F "..search)
+	-- CHANGE to use a different program to search
+	local cmd = io.popen("ag -H -F --depth 2 "..search..' '..home) 
+	-- The depth is set to make the search decently fast...
 	local lines = {}
 	for line in cmd:lines() do
 		table.insert(lines, line)
