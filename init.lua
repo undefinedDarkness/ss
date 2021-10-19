@@ -2,7 +2,11 @@
 
 -- Setup package path
 base_path = string.match(arg[0], "^(.-)[^/\\]*$")
-package.path = package.path .. ";" .. base_path .. "?.lua;" .. base_path .. "/?/init.lua" 
+if base_path and #base_path > 0 then
+	package.path = package.path .. ";" .. base_path .. "?.lua;" .. base_path .. "/?/init.lua" 
+else
+	package.path = package.path .. ';./?/init.lua'
+end
 
 local lgi = require("lgi")
 Gtk = lgi.require("Gtk")
