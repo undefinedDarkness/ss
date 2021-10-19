@@ -1,8 +1,8 @@
 #! /usr/bin/env lua
 
 -- Setup package path
-local base_path = string.match(arg[0], "^(.-)[^/\\]*$")
-package.path = string.format("%s;%s?.lua", package.path, base_path)
+base_path = string.match(arg[0], "^(.-)[^/\\]*$")
+package.path = package.path .. ";" .. base_path .. "?.lua;" .. base_path .. "/?/init.lua" 
 
 local lgi = require("lgi")
 Gtk = lgi.require("Gtk")
