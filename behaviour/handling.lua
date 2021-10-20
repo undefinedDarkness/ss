@@ -43,7 +43,7 @@ function M.setup_all(list, entry, preview, window)
 	-- Connect to movement in list
 	function list.on_row_activated(_, row)
 		row:get_child():clicked()
-		Gtk.main_quit()
+		window:close()
 	end
 
 	function list.on_row_selected(_, row)

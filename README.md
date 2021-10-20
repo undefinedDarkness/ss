@@ -38,6 +38,7 @@ Technically SS should just drop into a [awesome](https://awesomewm.org/) configu
 - Proper capturing of the keyboard - has improved   
 - A unit conversion source  
 - Combination Source system
+- Categorize items by source
 - Support functionality like [lighthouse](https://github.com/emgram769/lighthouse)  
 - Better documentation  
 	syntax highlighting (?) 

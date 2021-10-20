@@ -1,10 +1,14 @@
 #! /usr/bin/env lua
 
 -- Setup package path
-base_path = string.match(arg[0], "^(.-)[^/\\]*$")
+arg = arg or {}
+base_path = string.match(arg[0] or "", "^(.-)[^/\\]*$")
 if base_path and #base_path > 0 then
 	package.path = package.path .. ";" .. base_path .. "?.lua;" .. base_path .. "/?/init.lua"
-else
+elseif awesome then
+	base_path = require('gears.filesystem').get_configuration_dir()..(...):match("%S+"):gsub("%.", "/")..'/' 
+	package.path = base_path .. '/?.lua;'..base_path..'/?/init.lua;' .. package.path
+else -- For luaJIT
 	package.path = package.path .. ";./?/init.lua"
 end
 
@@ -19,18 +23,23 @@ local window = Gtk.Window({
 	default_width = 400,
 	default_height = 400,
 	resizable = true,
-	on_destroy = Gtk.main_quit,
-	on_key_press_event = function(_, e)
-		-- Escape
-		if e.keyval == 0xff1b then
-			Gtk.main_quit()
-		end
-	end,
+	
 	has_resize_grip = true,
 	window_position = Gtk.WindowPosition.CENTER,
 	decorated = false,
 	resizable = true,
 })
+
+if not awesome then
+	window.on_destroy = Gtk.main_quit
+end
+
+function window:on_key_press_event(_, e)
+		-- Escape
+		if e.keyval == 0xff1b then
+			self:close()
+		end
+	end
 
 local preview = Gtk.ScrolledWindow({})
 require("ui.util").class(preview, "preview-panel")

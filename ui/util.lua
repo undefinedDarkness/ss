@@ -8,6 +8,7 @@ end
 
 function M.css(base_path)
 	local provider = Gtk.CssProvider()
+	print(base_path .. "app.css")
 	local err, msg = provider:load_from_path(base_path .. "app.css", err)
 	if not err then
 		print("CSS Error:  " .. tostring(msg))
