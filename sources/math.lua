@@ -1,6 +1,6 @@
 local maths_cache = {}
 local tbl = require("util.tbl")
-return function (search, force)
+return function(add, search, force)
 	if not force then
 		-- Check for invalid input
 		if (not string.find(search, "=")) or string.find(search, "[a-z][A-Z]") then
@@ -19,11 +19,7 @@ return function (search, force)
 
 	if not tbl.contains(maths_cache, resp) then
 		table.insert(maths_cache, resp)
-		return { 
-			{ name = resp, 
-			  cb = function() end,
-		    }
-	  }
+		add({ name = resp, cb = function() end })
 	else
 		return
 	end

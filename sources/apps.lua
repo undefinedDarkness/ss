@@ -1,5 +1,5 @@
 local Gio = require("lgi").Gio
-return function () 
+return function()
 	local entries = Gio.AppInfo.get_all()
 	local o = {}
 	for _, entry in ipairs(entries) do
@@ -9,6 +9,7 @@ return function ()
 			cb = function()
 				entry:launch({}, nil, nil)
 			end,
+			preview = entry:get_description()
 		}
 	end
 	return o

@@ -57,16 +57,14 @@ local function file_item(line)
 	}
 end
 
-return function (search, force)
+return function (add, search, force)
 	-- Ignore a search for every file
 	if not force or search == "*" then 
 		return
 	end
 	local results = io.popen("find " .. home .. ' -name "' .. search .. '"')
-	local out = {}
 	for line in results:lines() do
-		table.insert(out, file_item(line))
+		add(file_item(line))
 	end
 	results:close()
-	return out
 end 

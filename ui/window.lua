@@ -1,4 +1,4 @@
-return  Gtk.Window({
+return Gtk.Window({
 	title = "SS",
 	default_width = 800,
 	default_height = 500,
@@ -6,7 +6,7 @@ return  Gtk.Window({
 	on_destroy = Gtk.main_quit,
 	on_key_press_event = function(_, e)
 		-- Escape
-		if (e.keyval == 0xff1b) then 
+		if e.keyval == 0xff1b then
 			Gtk.main_quit()
 		end
 	end,

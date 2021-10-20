@@ -1,5 +1,14 @@
 local M = {}
 
+function M.filter(tbl, fn)
+	for k, v in ipairs(tbl) do
+		if not fn(k, v) then
+			tbl[k] = nil
+		end
+	end
+	return tbl
+end
+
 function M.contains(tbl, v)
 	for _, val in ipairs(tbl) do
 		if val == v then

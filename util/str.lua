@@ -2,11 +2,11 @@ local M = {}
 
 function M.parse_search_arguments(search, expected)
 	local cpy = search
-	for match in search:gmatch('%w+:%S+') do
+	for match in search:gmatch("%w+:%S+") do
 		local name, val = M.split_between(search, expected)
 		expected[name:lower()] = val
-		cpy = cpy:gsub(search, '')
-	end 
+		cpy = cpy:gsub(search, "")
+	end
 	return expected, cpy
 end
 
@@ -21,7 +21,7 @@ end
 -- Only useful for single char splitting
 function M.split_between(input, sep)
 	local f = string.find(input, sep)
-	return input:sub(1, f-1), input:sub(f+1, #input)
+	return input:sub(1, f - 1), input:sub(f + 1, #input)
 end
 
 function M.split(inputstr, sep)
@@ -36,11 +36,11 @@ function M.split(inputstr, sep)
 end
 
 function M.uuid()
-    local template ='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-    return string.gsub(template, '[xy]', function (c)
-        local v = (c == 'x') and math.random(0, 0xf) or math.random(8, 0xb)
-        return string.format('%x', v)
-    end)
+	local template = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+	return string.gsub(template, "[xy]", function(c)
+		local v = (c == "x") and math.random(0, 0xf) or math.random(8, 0xb)
+		return string.format("%x", v)
+	end)
 end
 
 return M

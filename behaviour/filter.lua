@@ -1,7 +1,7 @@
 local cache = {}
 local M = {}
-local tbl = require('util.tbl')
-local str = require('util.str')
+local tbl = require("util.tbl")
+local str = require("util.str")
 local fzy = require("util.fzy")
 
 function M.fuzzy_search(search, list)
@@ -16,7 +16,7 @@ function M.fuzzy_search(search, list)
 	local data = fzy.filter(
 		search,
 		tbl.map(cache, function(_, v)
-			return v:get_child().id 
+			return v:get_child().id
 		end)
 	)
 
@@ -39,16 +39,16 @@ function M.search(search, list)
 		end
 		list:remove(child)
 	end)
-	
-	local empty = search:gsub('%s', '') == ""
-	
+
+	local empty = search:gsub("%s", "") == ""
+
 	-- CHANGE: Remove the :lower() if you want the comparison to be case sensitive
 	search = search:lower()
-	
+
 	-- Add each item if they match the search term
 	for _, item in ipairs(cache) do
 		local heap = item:get_child().id
-		
+
 		if empty or (str.starts_with(heap:lower(), search)) then
 			list:add(item)
 		end
