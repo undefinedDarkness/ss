@@ -9,31 +9,21 @@ function M.filter(tbl, fn)
 	return tbl
 end
 
-function M.contains(tbl, v)
-	for _, val in ipairs(tbl) do
+function M.contains(tbl, v, fn)
+	for i, val in ipairs(tbl) do
+		if (fn and fn(val, v) or val == v) then
+			return true, val, i
+		end
+	end
+	return false
+end
+
+function M.remove_by_value(t, v)
+	for i, val in ipairs(t) do
 		if val == v then
-			return true
+			table.remove(t, i)
 		end
 	end
-	return false
-end
-
-function M.key_contains(tbl, v)
-	for key, _ in pairs(tbl) do
-		if key == v then
-			return true
-		end
-	end
-	return false
-end
-
-function M.all(tbl)
-	for _, val in ipairs(tbl) do
-		if val == false or val == nil then
-			return false
-		end
-	end
-	return true
 end
 
 function M.map(tbl, fn)

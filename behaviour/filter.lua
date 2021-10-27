@@ -27,6 +27,7 @@ function M.fuzzy_search(search, list)
 
 	for _, result in ipairs(data) do
 		local v = cache[result[1]]
+		-- TODO: Highlight matched part
 		list:add(v)
 	end
 end

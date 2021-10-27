@@ -7,17 +7,25 @@ local M = {}
 
 -- CHANGE this to modify active sources, and the bangs used for each source
 -- TODO: Full forms.. again
-M.enabled_sources = {
-	m = src.math,
-	f = src.file,
-	["if"] = src.in_file,
-}
+M.enabled_sources = src 
 
 -- CHANGE source to be used at startup
+-- TODO: Allow multiple sources here
 if tbl.contains(arg, "--dmenu") then
 	M.startup_source = src.dmenu()
 else
 	M.startup_source = src.apps()
+end
+
+--  Disable / Enable a source by name
+function M.disable_source(source)
+	tbl.remove_by_value(M.enabled_sources, source)
+end
+
+function M.enable_source(source)
+	if not tbl.contains(M.enabled_sources, source) then
+	table.insert(M.enabled_sources, source)
+end
 end
 
 local cancel = nil
@@ -36,12 +44,13 @@ function M.update_list(search, list)
 
 	-- Check and use bangs if any
 	local bang, action = search:match("!(%w+)%s(.*)")
-	if bang and #bang > 0 and tbl.key_contains(M.enabled_sources, bang) then
-		Gio.Async.start(M.enabled_sources[bang], cancel)(add_item, action, true)
+	local c, source = (bang and #bang > 0) and tbl.contains(M.enabled_sources, nil, function(source) return source.bang == bang or source.full_form == bang end) or false, nil
+	if c then
+		Gio.Async.start(source[1], cancel)(add_item, action, true)
 	else
 		-- Normally loop through every source
-		for _, source in pairs(M.enabled_sources) do
-			Gio.Async.start(source, cancel)(add_item, search, false)
+		for _, source in ipairs(M.enabled_sources) do
+			Gio.Async.start(source[1], cancel)(add_item, search, false)
 		end
 	end
 end

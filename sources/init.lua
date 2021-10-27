@@ -1,9 +1,9 @@
 return {
-	in_file = require("sources.in_file"),
+	{ bang = "m", full_form = "math", require("sources.math") },
+	{ bang = "f", full_form = "file", require("sources.file") },
+	{ bang = "if",  full_form = "infile", require("sources.in_file") },
 	dmenu = require("sources.dmenu"),
 	apps = require("sources.apps"),
-	file = require("sources.file"),
-	math = require("sources.math"),
 }
 
 -- How to create your own source:

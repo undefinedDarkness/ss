@@ -5,7 +5,7 @@ local str = require('util.str')
 local files_cache = {}
 
 local scale_factor = 1.5 -- CHANGE to modify image preview size
-local function smart_resize_image(og_w, og_h, w, h)
+local function half_resize_image(og_w, og_h, w, h)
 	while (og_w > w and og_h > h) do
 		og_w = og_w / scale_factor
 		og_h = og_h / scale_factor
@@ -20,7 +20,9 @@ local function file_preview(line)
 			local widget = Gtk.TextView {
 				editable = false
 			}
-			local content = require('util.other').read_file(line)
+			local f = io.open(line)
+			local content = f:read("*a")
+			f:close()
 			widget.buffer:set_text(content , #content)
 			return widget
 		end
@@ -35,7 +37,7 @@ local function file_preview(line)
 			local scaling = (og_w <= 256 and og_h <= 256) and GdkPixbuf.InterpType.NEAREST or GdkPixbuf.InterpType.BILINEAR
 			
 			-- Halve the original width / height till it fits
-			local new_w, new_h = smart_resize_image(og_w, og_h, space.width, space.height)
+			local new_w, new_h = half_resize_image(og_w, og_h, space.width, space.height)
 			pixbuf = pixbuf:scale_simple(new_w, new_h, scaling)
 
 			local image = Gtk.Image.new_from_pixbuf(pixbuf)

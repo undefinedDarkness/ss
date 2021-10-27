@@ -62,6 +62,7 @@ function M.setup_all(list, entry, preview, window)
 		if e.keyval ~= 0xff52 or e.keyval ~= 0xff5 then
 			entry:handle_event(e)
 			entry:grab_focus_without_selecting()
+			list:unselect_all()
 		end
 	end
 end

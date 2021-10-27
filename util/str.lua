@@ -1,13 +1,7 @@
 local M = {}
 
-function M.parse_search_arguments(search, expected)
-	local cpy = search
-	for match in search:gmatch("%w+:%S+") do
-		local name, val = M.split_between(search, expected)
-		expected[name:lower()] = val
-		cpy = cpy:gsub(search, "")
-	end
-	return expected, cpy
+function M.highlight_section(whole, match_start, match_end)
+	return whole:sub(1, match_start) .. '<b>' .. whole:sub(match_start+1, match_end-1) .. '</b>' .. whole:sub(match_end)
 end
 
 function M.starts_with(str, start)

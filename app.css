@@ -10,23 +10,28 @@ list {
 }
 
 .list-item {
+	/* background-color: #f2e9de; */
 	background-color: #222;
 	padding: 8px;
 	outline-color: #fff;
+	/* color: #575279; */
 }
 
 textview {
 	padding: 16px;
-	background: #151515;
+	background-color: #333;
+	/* background: #575279; */
 	font-family: monospace;
 }
 
 window {
+	/* background-color: #f2e9de; */
 	background-color: #222;
 }
 
 row:selected .list-item, .list-item:hover  {
-	background: #333;
+	/* background: #eee9e6; */
+	background-color: #444;
 }
 
 label {
@@ -45,6 +50,7 @@ label {
 }
 
 .preview-panel {
+	/* border-left: 1px solid 	#6e6a86; */
 }
 
 entry {
@@ -52,7 +58,13 @@ entry {
 	min-height: 50px;
 }
 
+.mode-button {
+	padding: 8px;
+}
+
 entry,.count {
+	/* color: #6e6a86; */
+	/* background: #fffaf3; */
 	background: #111;
 }
 

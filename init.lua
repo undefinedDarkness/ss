@@ -3,12 +3,15 @@
 -- Setup package path
 arg = arg or {}
 base_path = string.match(arg[0] or "", "^(.-)[^/\\]*$")
+	-- For normal lua
 if base_path and #base_path > 0 then
 	package.path = package.path .. ";" .. base_path .. "?.lua;" .. base_path .. "/?/init.lua"
 elseif awesome then
+	-- For awesomeWM
 	base_path = require('gears.filesystem').get_configuration_dir()..(...):match("%S+"):gsub("%.", "/")..'/' 
 	package.path = base_path .. '/?.lua;'..base_path..'/?/init.lua;' .. package.path
-else -- For luaJIT
+else 
+	-- For luaJIT
 	package.path = package.path .. ";./?/init.lua"
 end
 
@@ -29,6 +32,7 @@ local window = Gtk.Window({
 	decorated = false,
 	resizable = true,
 })
+window:set_keep_above(true)
 
 if not awesome then
 	window.on_destroy = Gtk.main_quit
@@ -36,11 +40,12 @@ end
 
 function window:on_key_press_event(_, e)
 		-- Escape
-		if e.keyval == 0xff1b then
+		if e and e.keyval == 0xff1b then
 			self:close()
 		end
-	end
+end
 
+-- Create preview window
 local preview = Gtk.ScrolledWindow({})
 require("ui.util").class(preview, "preview-panel")
 function preview:on_show()
@@ -53,7 +58,9 @@ end
 local list = ui.list.init(preview)
 local bar, entry = ui.search()
 
-local widget = Gtk.HBox({
+local widget = Gtk.HBox({})
+widget:pack_start(require('ui.switcher'), false, false, 0)
+widget:add(
 	Gtk.Box({
 		homogeneous = false,
 		bar,
@@ -62,13 +69,12 @@ local widget = Gtk.HBox({
 			min_content_height = window.default_height - 50,
 		}),
 		orientation = Gtk.Orientation.VERTICAL,
-	}),
-	orientation = Gtk.Orientation.HORIZONTAL,
-	homogeneous = true,
-})
+	}))
 
+-- Setup event handling and passing between widgets
 require("behaviour.handling").setup_all(list, entry, preview, window)
 window:add(widget)
 window:show_all()
-widget:add(preview)
+widget:add(preview) -- To not be shown by default
+entry:grab_focus_without_selecting()
 Gtk.main()
