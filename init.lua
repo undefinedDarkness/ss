@@ -16,7 +16,7 @@ else
 end
 
 local lgi = require("lgi")
-Gtk = lgi.require("Gtk")
+Gtk = lgi.require("Gtk", "3.0")
 
 local ui = require("ui")
 ui.util.css(base_path)
