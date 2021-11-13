@@ -17,14 +17,15 @@ local function file_preview(line)
 	local ctype = Gio.content_type_guess(line)
 	if str.starts_with(ctype, "text") then
 		return function()
-			local widget = Gtk.TextView {
-				editable = false
-			}
+			-- local widget = Gtk.TextView {
+			-- 	editable = false,
+			-- 	cursor_visible = false
+			-- }
 			local f = io.open(line)
 			local content = f:read("*a")
 			f:close()
-			widget.buffer:set_text(content , #content)
-			return widget
+			-- widget.buffer:set_text(content , #content)
+			return Gtk.Label {label=content}
 		end
 	elseif str.starts_with(ctype, "image") then
 		return function(parent) 
@@ -49,9 +50,11 @@ local function file_preview(line)
 end
 
 local function file_item(line)
+	local last = line:gsub(home, '~'):match('[^/]+/[^/]+$') or str.path.basename(last) 
 	return {
+		source = "File",
 		icon = Gio.content_type_get_icon(Gio.content_type_guess(line)),
-		name = line:gsub(home, "~"),
+		name = last..'\n'..line,
 		cb = function()
 			Gio.AppInfo.launch_default_for_uri("file://"..line)
 		end,

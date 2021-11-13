@@ -15,7 +15,9 @@ function M.setup_item(item, preview, widget)
 				x:destroy()
 			end
 			-- Generate preview on-demand
-			preview:add(item.preview(preview))
+			local widget = item.preview(preview)
+			require('ui.util').class(widget, 'preview-content')
+			preview:add(widget)
 			preview:show_all()
 		end
 	elseif type(item.preview) == "string" then

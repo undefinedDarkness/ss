@@ -11,10 +11,10 @@ M.enabled_sources = src
 
 -- CHANGE source to be used at startup
 -- TODO: Allow multiple sources here
-if tbl.contains(arg, "--dmenu") then
-	M.startup_source = src.dmenu()
+if require("behaviour.general").arguments.dmenu then
+	M.startup_source = src.dmenu
 else
-	M.startup_source = src.apps()
+	M.startup_source = src.apps
 end
 
 --  Disable / Enable a source by name
@@ -44,8 +44,8 @@ function M.update_list(search, list)
 
 	-- Check and use bangs if any
 	local bang, action = search:match("!(%w+)%s(.*)")
-	local c, source = (bang and #bang > 0) and tbl.contains(M.enabled_sources, nil, function(source) return source.bang == bang or source.full_form == bang end) or false, nil
-	if c then
+	local exists, source = tbl.contains(M.enabled_sources, nil, function(x) return x.full_form == bang or x.bang == bang end)
+	if  exists then
 		Gio.Async.start(source[1], cancel)(add_item, action, true)
 	else
 		-- Normally loop through every source

@@ -35,9 +35,7 @@ lua init.lua
 Technically SS should just drop into a [awesome](https://awesomewm.org/) configuration (part of why it was made this way), if it doesn't, please make an issue.
   
 ### TODO  
-- Proper capturing of the keyboard - has improved   
 - A unit conversion source  
-- Combination Source system
 - Categorize items by source
 - Support functionality like [lighthouse](https://github.com/emgram769/lighthouse)  
 - Better documentation  
@@ -51,6 +49,8 @@ Technically SS should just drop into a [awesome](https://awesomewm.org/) configu
 <details>
 <summary>Done</summary>
 
+- Combination Source system  ✔ 
+- Proper capturing of the keyboard - has improved  ✔  
 - More advanced results than just icon / text / callback ✔  
 - Preview support for file finder source   ✔   
 	and need image support    ✔  

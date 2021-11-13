@@ -1,12 +1,13 @@
 local enabled = require("behaviour.sources").enabled_sources
 local class = require("ui.util").class
+local str = require('util.str')
 
 local list = Gtk.VBox{homogeneous = false}
 class(list, "mode-switcher")
 
 for _, source in ipairs(enabled) do
 	local btn = Gtk.CheckButton {
-		Gtk.Label { label = source.full_form },
+		Gtk.Label { label = str.title_case(source.full_form) },
 		active = true
 	}
 	function btn.on_toggled()

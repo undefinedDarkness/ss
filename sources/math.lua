@@ -19,7 +19,7 @@ return function(add, search, force)
 
 	if not tbl.contains(maths_cache, resp) then
 		table.insert(maths_cache, resp)
-		add({ name = resp, cb = function() end })
+		add({ name = resp, cb = function() end, source = "Maths" })
 	else
 		return
 	end

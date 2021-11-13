@@ -12,10 +12,14 @@ function M.trim(s)
 	return s:match("^%s*(.-)%s*$") or ""
 end
 
--- Only useful for single char splitting
-function M.split_between(input, sep)
-	local f = string.find(input, sep)
-	return input:sub(1, f - 1), input:sub(f + 1, #input)
+function M.title_case(str)
+	local out = ""
+	for w in str:gmatch("%S+") do
+		w = w:lower()
+		w = w:sub(1, 1):upper() .. w:sub(2)
+		out = out .. " " .. w
+	end
+	return out
 end
 
 function M.split(inputstr, sep)
@@ -27,6 +31,23 @@ function M.split(inputstr, sep)
 		table.insert(t, str)
 	end
 	return t
+end
+
+-- Path sub library
+M.path={}
+
+function M.path.dirname(str)
+	if str:match(".-/.-") then
+		local name = string.gsub(str, "(.*/)(.*)", "%1")
+		return name
+	else
+		return ''
+	end
+end
+
+function M.path.basename(str)
+	local name = string.gsub(str, "(.*/)(.*)", "%2")
+	return name
 end
 
 function M.uuid()

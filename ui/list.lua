@@ -45,14 +45,24 @@ function M.list_item(item)
 		interior:add(image)
 	end
 
-	interior:add(Gtk.Label({ label = item.name }))
+	local name = Gtk.Label { label = item.name }
+	name:set_ellipsize(3)
+	interior:add(name)
+	
+	if item.source then
+		local txt = Gtk.Label { label = item.source }
+		require('ui.util').class(txt, "source-text")
+		txt:set_valign(Gtk.Align.START)
+		interior:pack_end(txt, false, false, 0)
+	end
+
 	return widget
 end
 
 function M.init(preview)
 	local list = Gtk.ListBox({})
 	M.preview = preview -- Store as global for repeated access
-	for k, item in ipairs(require("behaviour.sources").startup_source) do
+	for k, item in ipairs(require("behaviour.sources").startup_source()) do
 		list:add(M.list_item(item))
 	end
 	return list
