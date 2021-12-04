@@ -1,3 +1,5 @@
+-- My own table library
+
 local M = {}
 
 function M.filter(tbl, fn)

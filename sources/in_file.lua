@@ -1,4 +1,4 @@
-local str = require("util.str")
+local str = require("libs.str")
 local home = os.getenv("HOME")
 local Gio = require("lgi").Gio
 return function(add, search, force)

@@ -49,7 +49,7 @@ function M.list_item(item)
 	name:set_ellipsize(3)
 	interior:add(name)
 	
-	if item.source then
+	if item.source ~= "Application" then
 		local txt = Gtk.Label { label = item.source }
 		require('ui.util').class(txt, "source-text")
 		txt:set_valign(Gtk.Align.START)

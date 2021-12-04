@@ -1,8 +1,12 @@
+-- Search Library:
+-- Fuzzy Finding
+-- Regular Searching
+
 local cache = {}
 local M = {}
-local tbl = require("util.tbl")
-local str = require("util.str")
-local fzy = require("util.fzy")
+local tbl = require("libs.tbl")
+local str = require("libs.str")
+local fzy = require("libs.fzy")
 
 function M.fuzzy_search(search, list)
 	list:foreach(function(child)
@@ -27,7 +31,6 @@ function M.fuzzy_search(search, list)
 
 	for _, result in ipairs(data) do
 		local v = cache[result[1]]
-		-- TODO: Highlight matched part
 		list:add(v)
 	end
 end

@@ -1,7 +1,9 @@
+-- Using sources
+
 local src = require("sources")
 local Gio = require("lgi").Gio
 local GLib = require("lgi").GLib
-local tbl = require("util.tbl")
+local tbl = require("libs.tbl")
 local ui = require("ui")
 local M = {}
 
@@ -11,7 +13,7 @@ M.enabled_sources = src
 
 -- CHANGE source to be used at startup
 -- TODO: Allow multiple sources here
-if require("behaviour.general").arguments.dmenu then
+if require("behaviour.args").dmenu then
 	M.startup_source = src.dmenu
 else
 	M.startup_source = src.apps

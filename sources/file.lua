@@ -1,7 +1,7 @@
 local home =os.getenv("HOME")
 local Gio = require("lgi").Gio
 local GdkPixbuf = require("lgi").GdkPixbuf
-local str = require('util.str')
+local str = require('libs.str')
 local files_cache = {}
 
 local scale_factor = 1.5 -- CHANGE to modify image preview size

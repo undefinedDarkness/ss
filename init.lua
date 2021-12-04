@@ -1,5 +1,9 @@
 #! /usr/bin/env lua
 
+-- Main Init Code:
+-- Loads libraries
+-- Builds initial user interface
+
 -- Initiate package path {{{
 	arg = arg or {}
 	base_path = string.match(arg[0] or "", "^(.-)[^/\\]*$")
@@ -22,7 +26,7 @@ Gtk = lgi.require("Gtk", "3.0")
 local ui = require("ui")
 ui.util.init_css(base_path)
 
-local window = ui.util.create_window() 
+local window = ui.window() 
 
 -- Create preview window {{{
 local preview = Gtk.ScrolledWindow({})
@@ -36,34 +40,42 @@ end
 -- }}}
 
 local list = ui.list.init(preview)
-local bar, entry = ui.search()
+local entry = Gtk.SearchEntry({})
+-- TODO: Find some way to hide the annoying secondary icon
+-- setting it to null doesnt work too well :/
+
+-- local count = Gtk.Label {label='0/0'}
+-- require('ui.util').class(count, 'count')
+
+local bar = Gtk.HBox({
+	entry,
+	homogeneous = false,
+})
 
 local widget = Gtk.HBox({})
 
 -- If is running in dmenu mode
 -- disable mode switcher
 -- CHANGE uncomment to enable
-if not require('behaviour.general').arguments.dmenu  then
+local a = require('behaviour.args')-- .arguments
+if not (a.dmenu or a.no_switcher)  then
 	widget:pack_start(require('ui.switcher'), false, false, 0)
 end
 
-widget:add(
-Gtk.Box({
+local layout = Gtk.Box({
 	homogeneous = false,
-	bar,
-	Gtk.ScrolledWindow({
-		list,
-		min_content_height = window.default_height - 50,
-	}),
 	orientation = Gtk.Orientation.VERTICAL,
-}))
+})
+layout:pack_start(Gtk.ScrolledWindow({ list }), true, true, 0)
+layout:pack_start(bar, false, false, 0)
+widget:add(layout)
 
 -- Setup event handling and passing between widgets
 require("behaviour.handling").setup_all(list, entry, preview, window)
 window:add(widget)
 window:show_all()
 widget:add(preview) -- To not be shown by default
-entry:grab_focus_without_selecting()
+-- entry:grab_focus_without_selecting()
 
 -- Start main loop
 Gtk.main()

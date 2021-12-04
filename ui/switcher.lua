@@ -1,6 +1,8 @@
+-- Mode switcher
+
 local enabled = require("behaviour.sources").enabled_sources
 local class = require("ui.util").class
-local str = require('util.str')
+local str = require('libs.str')
 
 local list = Gtk.VBox{homogeneous = false}
 class(list, "mode-switcher")

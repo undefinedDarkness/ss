@@ -1,15 +1,17 @@
-local tbl = require("util.tbl")
-local str = require("util.str")
+-- Argument Parsing
+
+local tbl = require("libs.tbl")
+local str = require("libs.str")
 local M = {}
 
--- Parse arguments {{{
 M.arguments = {
-	style = "app.css"
+	theme = "default",
+	type = "center-menu"
 }
 
 for idx, a in ipairs(arg) do
 	if str.starts_with(a, "--") then
-		M.arguments[a:sub(3)] = arg[idx+1] or true
+		M.arguments[a:sub(3):gsub('-', '_')] = arg[idx+1] or true
 	end
 end
 
@@ -21,8 +23,9 @@ Super Searcher
 
 --dmenu	-> Launch in dmenu mode
 --style -> Change css file that is loaded (filename)
+--no-switcher -> Disable switcher
 	]])
 	os.exit()
 end
 
-return M
+return M.arguments

@@ -1,5 +1,5 @@
 local maths_cache = {}
-local tbl = require("util.tbl")
+local tbl = require("libs.tbl")
 return function(add, search, force)
 	if not force then
 		-- Check for invalid input

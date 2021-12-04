@@ -1,3 +1,5 @@
+-- My own string library
+
 local M = {}
 
 function M.highlight_section(whole, match_start, match_end)

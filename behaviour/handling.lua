@@ -1,3 +1,5 @@
+-- Sets up events for lots of UI components
+
 local M = {}
 
 -- Setup item callbacks
