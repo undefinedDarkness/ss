@@ -10,7 +10,7 @@ end
 -- Load css from app.css
 function M.init_css(base_path)
 	local provider = Gtk.CssProvider()
-	local err, msg = provider:load_from_path(base_path .. require('behaviour.general').arguments.style, err)
+	local err, msg = provider:load_from_path(base_path .. 'ui/themes/' .. require('behaviour.general').arguments.style, err)
 	if not err then
 		print("CSS Error:  " .. tostring(msg))
 	end

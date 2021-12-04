@@ -46,11 +46,11 @@ function M.update_list(search, list)
 	local bang, action = search:match("!(%w+)%s(.*)")
 	local exists, source = tbl.contains(M.enabled_sources, nil, function(x) return x.full_form == bang or x.bang == bang end)
 	if  exists then
-		Gio.Async.start(source[1], cancel)(add_item, action, true)
+		Gio.Async.start(source[1], cancel)(add_item, action, true, cancel)
 	else
 		-- Normally loop through every source
 		for _, source in ipairs(M.enabled_sources) do
-			Gio.Async.start(source[1], cancel)(add_item, search, false)
+			Gio.Async.start(source[1], cancel)(add_item, search, false, cancel)
 		end
 	end
 end

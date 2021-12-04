@@ -1,0 +1,3 @@
+[submodule "deps/lanes"]
+	path = deps/lanes
+	url = https://github.com/LuaLanes/lanes.git
