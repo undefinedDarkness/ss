@@ -16,8 +16,7 @@ return {
 			window.default_width = 400
 			window.default_height = 400
 		elseif wt == "sidebar" then
-			window.default_width = 400
-			window.default_height = 830
+			window:set_size_request(64, 830)
 			window:move(0, 0)
 		end
 

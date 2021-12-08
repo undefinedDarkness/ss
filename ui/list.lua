@@ -24,6 +24,7 @@ function M.list_item(item)
 
 	-- This is only used to have a active event and hover support
 	local widget = Gtk.Button({})
+	-- widget:set_size_request(0, 0)
 
 	widget.id = item.name
 	require("ui.util").class(widget, "list-item")
@@ -45,16 +46,16 @@ function M.list_item(item)
 		interior:add(image)
 	end
 
-	local name = Gtk.Label { label = item.name }
-	name:set_ellipsize(3)
-	interior:add(name)
+	-- local name = Gtk.Label { label = item.name }
+	-- name:set_ellipsize(3)
+	-- interior:add(name)
 	
-	if item.source ~= "Application" then
-		local txt = Gtk.Label { label = item.source }
-		require('ui.util').class(txt, "source-text")
-		txt:set_valign(Gtk.Align.START)
-		interior:pack_end(txt, false, false, 0)
-	end
+	-- if item.source ~= "Application" then
+	-- 	local txt = Gtk.Label { label = item.source }
+	-- 	require('ui.util').class(txt, "source-text")
+	-- 	txt:set_valign(Gtk.Align.START)
+	-- 	interior:pack_end(txt, false, false, 0)
+	-- end
 
 	return widget
 end
