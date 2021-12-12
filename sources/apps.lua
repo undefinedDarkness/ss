@@ -1,21 +1,33 @@
 local Gio = require("lgi").Gio
+
 return function()
 	local entries = Gio.AppInfo.get_all()
 	local o = {}
-	for _, entry in ipairs(entries) do
-		local desc = entry:get_description()
-		local name = entry:get_name()
-		if desc then 
-			name = name .. "\n" .. desc
+	
+	local default = Gtk.IconTheme.get_default()
+	local function lookup(name)
+		if name then
+			local l = default:lookup_icon(name, 32, {})
+			if l then
+				return l:load_icon()
+			end
 		end
-		o[#o + 1] = {
-			icon = entry:get_icon(),
-			source = "Application",
-			name = name,
-			cb = function()
-				os.execute('cd '..HOME..'; '..entry:get_executable()..' &')
-			end,
-		}
+	end
+	local fallback = lookup('applications-all')
+
+	for _, entry in ipairs(entries) do
+		local icon = entry:get_icon() or lookup(entry:get_executable()) -- or fallback
+		if icon then
+			o[#o + 1] = {
+				icon = icon,
+				source = "Application",
+				name = entry:get_name(),
+				desc = entry:get_description(),
+				cb = function()
+					entry:launch()
+				end,
+			}
+		end
 	end
 	return o
 end

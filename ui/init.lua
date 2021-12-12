@@ -1,12 +1,13 @@
 return {
 	util = require("ui.util"),
 	list = require("ui.list"),
-	window = function()
+	window = function(child)
 		local window = Gtk.Window({
 			title = "Switcher",
 			resizable = false,
 			has_resize_grip = false,
 			decorated = false,
+			child,
 		})
 		window:set_keep_above(true)
 		window:stick()

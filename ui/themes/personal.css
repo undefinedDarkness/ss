@@ -13,3 +13,16 @@ window {
 .item.selected {
 	background: #555;
 }
+
+.selected-label {
+	font-family: "Victor Mono";
+	font-style: italic;
+	min-width: 158px;
+}
+
+entry {
+	margin: 8px;
+	padding: 0 8px;
+	border: 1px solid;
+	border-radius: 16px;
+}

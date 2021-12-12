@@ -3,12 +3,13 @@
 local M = {}
 
 function M.filter(tbl, fn)
+	local r = {}
 	for k, v in ipairs(tbl) do
-		if not fn(k, v) then
-			tbl[k] = nil
+		if fn(k, v) then
+			r[#r + 1] = v
 		end
 	end
-	return tbl
+	return r
 end
 
 function M.contains(tbl, v, fn)
@@ -35,5 +36,12 @@ function M.map(tbl, fn)
 	end
 	return o
 end
+
+function M.join(a, b)
+  local result = {table.unpack(a)}
+  table.move(b, 1, #b, #result + 1, result)
+  return result
+end
+
 
 return M
