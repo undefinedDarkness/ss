@@ -1,5 +1,3 @@
--- Using sources
-
 local src = require("sources")
 local Gio = require("lgi").Gio
 local GLib = require("lgi").GLib

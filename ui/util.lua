@@ -9,6 +9,11 @@ function M.class(widget, class)
 	return widget
 end
 
+function M.rclass(widget, class)
+	widget:get_style_context():remove_class(class)
+	return widget
+end
+
 -- Load css from app.css
 function M.init_css(base_path)
 	local provider = Gtk.CssProvider()

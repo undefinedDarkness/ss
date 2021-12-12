@@ -20,10 +20,10 @@ if M.arguments.help then
 
 Super Searcher
 --------------
-
---dmenu	-> Launch in dmenu mode
---style -> Change css file that is loaded (filename)
+--dmenu	      -> Launch in dmenu mode
+--style       -> Change css file that is loaded (filename)
 --no-switcher -> Disable switcher
+--type        -> Window type
 	]])
 	os.exit()
 end

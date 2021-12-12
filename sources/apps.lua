@@ -13,9 +13,8 @@ return function()
 			source = "Application",
 			name = name,
 			cb = function()
-				entry:launch({}, nil, nil)
+				os.execute('cd '..HOME..'; '..entry:get_executable()..' &')
 			end,
-			-- preview = entry:get_description()
 		}
 	end
 	return o

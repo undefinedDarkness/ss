@@ -23,6 +23,8 @@
 local lgi = require("lgi")
 Gtk = lgi.require("Gtk", "3.0")
 
+HOME = os.getenv("HOME")
+
 local ui = require("ui")
 ui.util.init_css(base_path)
 
@@ -30,16 +32,26 @@ local window = ui.window()
 
 local preview = Gtk.ScrolledWindow({})
 ui.util.class(preview, "preview-panel")
--- function preview:on_show()
--- 	window:resize(800, window.default_height)
--- end
--- function preview:on_hide()
--- 	window:resize(400, window.default_height)
--- end
 
 -- Initiate some widgets
-local list = ui.list.init(preview)
 local entry = Gtk.SearchEntry({})
+local list = ui.list.init(entry, preview)
+
+function entry.on_stop_search()
+	Gtk.main_quit()
+end
+
+function window:on_key_press_event(e)
+	if (e.keyval >= 0xff51 and e.keyval <= 0xff54) or (e.keyval == 0xff0d)  then
+		list:grab_focus() 
+		list:event(e)
+		return true
+	elseif e.keyval == 0xff1b then
+		print("Exiting")
+		Gtk.main_quit()
+	end
+end
+
 
 local bar = Gtk.HBox({
 	entry,
@@ -58,16 +70,16 @@ end
 -- Main layout
 local layout = Gtk.Box({
 	homogeneous = false,
-	orientation = Gtk.Orientation.VERTICAL,
+	orientation = Gtk.Orientation.HORIZONTAL, -- CHANGE
 })
+layout:pack_start(bar, false, false, 0)
 layout:pack_start(Gtk.ScrolledWindow({ list }), true, true, 0)
--- layout:pack_start(bar, false, false, 0)
 widget:add(layout)
 
--- Setup event handling and passing between widgets
-require("behaviour.handling").setup_all(list, entry, preview, window)
 window:add(widget)
 window:show_all()
+window:present()
+-- entry:grab_focus_without_selecting()
 widget:add(preview)
 
 -- Start main loop

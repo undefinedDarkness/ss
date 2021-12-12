@@ -20,7 +20,7 @@ function M.fuzzy_search(search, list)
 	local data = fzy.filter(
 		search,
 		tbl.map(cache, function(_, v)
-			return v:get_child().id
+			return v.id
 		end)
 	)
 
@@ -51,7 +51,7 @@ function M.search(search, list)
 
 	-- Add each item if they match the search term
 	for _, item in ipairs(cache) do
-		local heap = item:get_child().id
+		local heap = item.id
 
 		if empty or (str.starts_with(heap:lower(), search)) then
 			list:add(item)

@@ -1,3 +1,15 @@
 * {
 	all: unset;
 }
+
+window {
+	background: #333;
+}
+
+.item {
+	padding: 8px;
+}
+
+.item.selected {
+	background: #555;
+}

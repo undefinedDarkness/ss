@@ -1,4 +1,3 @@
-local home =os.getenv("HOME")
 local Gio = require("lgi").Gio
 local GdkPixbuf = require("lgi").GdkPixbuf
 local str = require('libs.str')
