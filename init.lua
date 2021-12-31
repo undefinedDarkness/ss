@@ -31,7 +31,11 @@ local active = Gtk.Label {}
 ui.util.class(active, "selected-label")
 
 list = ui.list.init(entry, function(it)
-	active.label = it.name
+	if it then
+		active.label = it.name
+	else
+		active.label = "Nothing Found"
+	end
 end)
 
 function entry.on_stop_search()
@@ -57,14 +61,13 @@ layout:pack_start(entry, false, false, 0)
 layout:pack_start(active, false, false, 16)
 layout:pack_start(Gtk.ScrolledWindow({ list }), true, true, 0)
 
-local window = ui.window(layout) 
+local window = ui.util.init_window(layout) 
 function window:on_key_press_event(e)
 	if (e.keyval >= 0xff51 and e.keyval <= 0xff54) or (e.keyval == 0xff0d)  then
 		list:grab_focus() 
 		list:event(e)
 		return true
 	elseif e.keyval == 0xff1b then
-		print("Exiting")
 		Gtk.main_quit()
 	end
 end

@@ -3,11 +3,13 @@
 }
 
 window {
-	background: #333;
+	background: #262322;
 }
 
 .item {
-	padding: 8px;
+	padding: 0 5px;
+	margin: 8px;
+	border-radius: 5px
 }
 
 .item.selected {
@@ -23,6 +25,6 @@ window {
 entry {
 	margin: 8px;
 	padding: 0 8px;
-	border: 1px solid;
+	border: 1px solid #888;
 	border-radius: 16px;
 }

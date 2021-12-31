@@ -1,1 +1,1 @@
-lua init.lua --theme personal --no-switcher --type bar
+lua init.lua "test" --theme personal --no-switcher --type bar

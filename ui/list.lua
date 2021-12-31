@@ -40,20 +40,23 @@ function M.register_item(item)
 end
 
 function M.reset_selected()
-	local l = list:get_children()
-	local t = false
+	local items = list:get_children()
+	local active_found = false
 
-	for _, child in ipairs(l) do
-		c.rclass(child, 'selected')
-		
-		if t == false and child.visible == true then
-			t = true
-			c.class(child, 'selected')
-			M.state.active = child
-			update_active(M.state[child.id])
+	for _, item in ipairs(items) do
+		if active_found == false and item.visible == true then
+			active_found = true
+			c.class(item, 'selected')
+			M.state.active = item
+			update_active(M.state[item.id])
+		else
+			c.rclass(item, 'selected')
 		end
 	end
-	
+
+	if active_found == false then
+		update_active(nil)
+	end
 end
 
 function M.init(entry, e)
@@ -75,6 +78,7 @@ function M.init(entry, e)
 			if M.state.active == nil then
 				M.state.active = M.state[1]
 			end
+
 			update_active(M.state.active)
 			M.state.active = M.state.active.widget
 			c.class(M.state.active, "selected")
