@@ -27,15 +27,15 @@ ui.util.init_css(base_path)
 -- Initiate some widgets
 local entry = Gtk.SearchEntry({})
 
-local active = Gtk.Label {}
-ui.util.class(active, "selected-label")
+-- local active = Gtk.Label {}
+-- ui.util.class(active, "selected-label")
 
 list = ui.list.init(entry, function(it)
-	if it then
-		active.label = it.name
-	else
-		active.label = "Nothing Found"
-	end
+	-- if it then
+	-- 	active.label = it.name
+	-- else
+	-- 	active.label = "Nothing Found"
+	-- end
 end)
 
 function entry.on_stop_search()
@@ -57,9 +57,13 @@ local layout = Gtk.Box({
 	homogeneous = false,
 	orientation = Gtk.Orientation.HORIZONTAL, -- CHANGE
 })
-layout:pack_start(entry, false, false, 0)
-layout:pack_start(active, false, false, 16)
-layout:pack_start(Gtk.ScrolledWindow({ list }), true, true, 0)
+layout:add(entry)
+local scroller = Gtk.ScrolledWindow()
+scroller:add(list)
+scroller:set_propagate_natural_height(true)
+scroller:set_propagate_natural_width(true)
+-- scroller:show_all()
+layout:add(scroller)
 
 local window = ui.util.init_window(layout) 
 function window:on_key_press_event(e)

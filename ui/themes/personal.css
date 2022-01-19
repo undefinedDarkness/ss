@@ -1,19 +1,15 @@
-* {
-	all: unset;
-}
-
 window {
-	background: #262322;
+	background: #252221;
 }
 
 .item {
+	background: none;
 	padding: 0 5px;
 	margin: 8px;
-	border-radius: 5px
 }
 
 .item.selected {
-	background: #555;
+	background: #3d3837;
 }
 
 .selected-label {
@@ -25,6 +21,15 @@ window {
 entry {
 	margin: 8px;
 	padding: 0 8px;
-	border: 1px solid #888;
-	border-radius: 16px;
+	background: #262322;
 }
+
+entry image:last-child {
+	color: transparent;
+}
+
+button image {
+	margin-right: 8px;
+}
+
+entry image { margin-right: 8px; }

@@ -16,18 +16,24 @@ return function()
 	local fallback = lookup('applications-all')
 
 	for _, entry in ipairs(entries) do
+		local name = entry:get_name()
+		if name == "UXTerm" then
+			goto continue
+		end
 		local icon = entry:get_icon() or lookup(entry:get_executable()) -- or fallback
+
 		if icon then
 			o[#o + 1] = {
 				icon = icon,
 				source = "Application",
-				name = entry:get_name(),
+				name = name,
 				desc = entry:get_description(),
 				cb = function()
 					entry:launch()
 				end,
 			}
 		end
+		::continue::
 	end
 	return o
 end

@@ -40,7 +40,8 @@ function M.init_window(child)
 		window:stick()
 		local wt = require('behaviour.args').type
 		local screen_size = Gdk.Monitor.get_workarea(Gdk.Display.get_primary_monitor(Gdk.Display.get_default()))
-		
+		print(screen_size.width)
+
 		if wt == "center-menu" then
 			window:set_position(Gtk.WindowPosition.CENTER)
 			window.default_width = 400

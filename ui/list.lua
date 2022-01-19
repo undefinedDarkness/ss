@@ -16,17 +16,9 @@ M.state = {}
 local update_active = nil
 function M.register_item(item)
 	if not item.widget then
-		item.widget = Gtk.Box {}
-		if item.icon then
-			local image
-			if lgi.Gio.Icon:is_type_of(item.icon) then
-				image = Gtk.Image.new_from_gicon(item.icon, Gtk.IconSize.DND)
-			elseif lgi.Gdk.Pixbuf:is_type_of(item.icon) then
-				image = Gtk.Image.new_from_pixbuf(item.icon)
-			end
-			image:set_pixel_size(32)
-			item.widget:add(image)
-		end
+		item.widget = Gtk.Button.new_with_label(item.name)
+		item.widget.always_show_image = true
+		item.widget:set_image(Gtk.Image.new_from_gicon(item.icon, Gtk.IconSize.LARGE_TOOLBAR))
 	end
 	local index = #M.state + 1
 	M.state[index] = item
@@ -34,6 +26,10 @@ function M.register_item(item)
 		require('ui.util').class(item.widget, 'selected')
 		M.state.active = item.widget
 		update_active(item)
+	end
+	function item.widget.on_clicked()
+		item.cb()
+		Gtk.main_quit()
 	end
 	item.widget.id = index 
 	return c.class(item.widget, 'item')
@@ -64,6 +60,7 @@ function M.init(entry, e)
 
 	local list = Gtk.Box({
 		spacing = 0, -- CHANGE: To increase spacing between items
+		homogeneous = false,
 		orientation = Gtk.Orientation.HORIZONTAL -- CHANGE: to VERTICAL if you want
 	})
 	for k, item in ipairs(require("behaviour.sources").startup()) do

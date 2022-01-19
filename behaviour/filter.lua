@@ -9,6 +9,7 @@ local ui = require('ui.util')
 local state = require('ui.list').state
 
 function M.search(search)
+	search = search:lower()
 	list:foreach(function(child)
 		local name = state[child.id].name:lower()
 		if not (str.starts_with(name, search)) then
