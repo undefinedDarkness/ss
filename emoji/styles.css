@@ -1,0 +1,17 @@
+.ui {
+    padding: 20px;
+}
+
+entry {
+    margin: 20px;
+}
+
+.emoji-display {
+    font-size: 30px;
+}
+
+.sidebar button {
+    border: 0;
+    background-image: none;
+    background: inherit;
+}
